@@ -1,3 +1,6 @@
+/*
+Ponto no desenho do filtro da imagen
+*/
 class Ponto {
   PVector posicao;
   int cor;

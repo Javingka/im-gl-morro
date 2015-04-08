@@ -49,7 +49,8 @@ class Moldura {
     stroke(0, 0, 0);
     bezier( pontoBezier_1.x, pontoBezier_1.y, p1.x(), p1.y(), p2.x(), p2.y(), pontoBezier_2.x, pontoBezier_2.y);
     bezier( pontoBezier_3.x, pontoBezier_3.y, p4.x(), p4.y(), p3.x(), p3.y(), pontoBezier_4.x, pontoBezier_4.y);
-
+    fill(255,0,0);
+    text( pcentro.x() + " , " + pcentro.y() , pcentro.x()-20  , pcentro.y()+20 );
   //Desenha rect
     noFill();
     stroke(255);
@@ -59,11 +60,15 @@ class Moldura {
     int y1 = int( min(p1.y(), p2.y()) );
     int y2 = int( max(p4.y(), p3.y()) );
     rect( x1 , y1,  x2,  y2);
+    fill(255);
+    text( (x2-x1) , x1 + ((x2-x1)/2) , y1-20);
+    text( (y2-y1) , x1*.9, y1 + ((y2-y1)/2) );
     setWidth(x2-x1);
     rect1 = new PVector(x1, y1);
     rect2 = new PVector(x2, y2);
     setHeight(y2-y1);
-    //Desenha pontos
+    
+//Desenha pontos
     p1.disenha();
     p2.disenha();
     p3.disenha();
