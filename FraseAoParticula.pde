@@ -16,6 +16,8 @@ class FraseAoParticula {
   color frs;
   float alphaFrase;
   
+  int x1,x2,y1,y2; //pontos que desenham a área rectangular
+  
   FraseAoParticula (PVector _centro, int _tt) {
     centro = _centro;
     tamanhoTexto = _tt;
@@ -75,8 +77,8 @@ class FraseAoParticula {
     for (RPoint [] LinhaPonto : pontosFrase) {
       for (RPoint p : LinhaPonto) {
         pontosPos.add (new PVector(p.x + centro.x , p.y + posSup + (distDasFrases * i)) );
-        pontosPosDeriva.add ( new PVector (random(movimentoPontos.x1, movimentoPontos.x2),
-                                  random(movimentoPontos.y1, movimentoPontos.y2) ) );
+        pontosPosDeriva.add ( new PVector (random(x1, x2),
+                                 random(y1, y2) ) );
         totalPontos++;// = totalPontos+pontosFrase.get(p).length; //vamos somando os pontos
       }
       i++;   
@@ -134,4 +136,8 @@ class FraseAoParticula {
     
     popStyle();
   }
+  void setX1(int sx1) { x1 = sx1; }
+  void setY1(int sy1) { y1 = sy1; }
+  void setX2(int sx2) { x1 = sx2; }
+  void setY2(int sy2) { x1 = sy2; }
 }

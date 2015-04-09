@@ -11,8 +11,9 @@ class PontoSolto {
   color colorPonto;
   private boolean PontoEmPosicaoFrase;
   float alphaVar;
+  float x1,x2,y1,y2; //Para conocer los limites de su area
   
-  PontoSolto (float x, float y, color c) {
+  PontoSolto (float x, float y, color c, float _x1, float _x2, float _y1, float _y2) {
     posicao = new PVector(x, y);
     diam = 2;
     diamFrase = 1;
@@ -24,6 +25,7 @@ class PontoSolto {
     PontoEmPosicaoFrase= false;
     tempoNoise = random (3000);
     alphaVar = 255;
+    x1 = _x1; y1 = _y1; x2 = _x2; y2 = _y2;
   }
   
   void PontoNaFrase(PVector alvo) {
@@ -123,10 +125,10 @@ class PontoSolto {
     if (posicao.x > movimentoPontos.x2) aceleracao.x = -aceleracao.x;
     if (posicao.y > movimentoPontos.y2) aceleracao.y = -aceleracao.y;*/
     
-    if (posicao.x < movimentoPontos.x1) posicao.x = movimentoPontos.x2;
-    if (posicao.y < movimentoPontos.y1) posicao.y = movimentoPontos.y2;
-    if (posicao.x > movimentoPontos.x2) posicao.x = movimentoPontos.x1;
-    if (posicao.y > movimentoPontos.y2) posicao.y = movimentoPontos.y1;
+    if (posicao.x < x1) posicao.x = x2;
+    if (posicao.y < y1) posicao.y = y2;
+    if (posicao.x > x2) posicao.x = x1;
+    if (posicao.y > y2) posicao.y = y1;
     
   }
   

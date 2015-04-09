@@ -4,7 +4,7 @@ class CargaFrases {
   ArrayList <String> linhas;
   int cantLinhas;
   
-  CargaFrases ( int lxl) {
+  CargaFrases ( String frases_path, int lxl) {
     frases = loadStrings("frases.csv");//loadStrings("DATALOG_dia04_ed.CSV");
     letrasXlinea = lxl;
     linhas = new ArrayList <String>();

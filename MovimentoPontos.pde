@@ -16,6 +16,10 @@ class MovimentoPontos extends FraseAoParticula {
     y1 = centro.y - (altura / 2) ;
     x2 = centro.x + (largura / 2) ;
     y2 = centro.y + (altura / 2) ; 
+    setX1(int (x1));
+    setY1(int (y1));
+    setX2(int (x2));
+    setY2(int (y2));
     pontosEmPos = false;
     partidaDaFrase = false;
   }
@@ -37,7 +41,7 @@ class MovimentoPontos extends FraseAoParticula {
      pontosEmPos = false;
      partidaDaFrase = false;
      for (int p = 0 ; p < ObterTotalPontos() ; p++ ) {
-       pontosSoltos.add(new PontoSolto(random(x1, x2),random(y1, y2), color (255) ) );
+       pontosSoltos.add(new PontoSolto(random(x1, x2),random(y1, y2), color (255), x1, x2, y1, y2 ) );
      }
      
   }

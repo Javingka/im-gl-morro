@@ -5,9 +5,10 @@ import processing.video.*;
 import geomerative.*;
 
 ArrayList <Bambole> telas;
-CargaFrases cargaFrases;
-MovimentoPontos movimentoPontos,movimentoPontosB;
-boolean mostraFrase;
+ArrayList <BamboleFrases> telasF;
+//CargaFrases cargaFrases;
+//MovimentoPontos movimentoPontos,movimentoPontosB;
+//boolean mostraFrase;
 boolean presentacao;
 
 public void init() {
@@ -31,16 +32,17 @@ void setup() {
     //inicializacāo da biblioteca
   RG.init(this);
   RG.setPolygonizer(RG.ADAPTATIVE);
-  cargaFrases = new CargaFrases (20);
+//  cargaFrases = new CargaFrases (20);
   
-   PVector centroFrases = new PVector(545, 619);
-  movimentoPontos = new MovimentoPontos(centroFrases, 20, 185, 200 );
-  movimentoPontosB = new MovimentoPontos(new PVector(749, 639), 20, 185, 200 );
+//  movimentoPontos = new MovimentoPontos(new PVector(545, 619), 20, 185, 200 );
+//  movimentoPontosB = new MovimentoPontos(new PVector(749, 639), 20, 185, 200 );
   
-  novaFrase();
-  presentacao = mostraFrase = false;
+//  novaFrase();
+  presentacao = false;
   
   telas = new ArrayList <Bambole>();
+  telasF = new ArrayList <BamboleFrases>();
+  
   addTelas();
   
   frameRate(30);  
@@ -62,69 +64,49 @@ void addTelas() {
   telas.get(telas.size()-1).setWidth(271);
   telas.get(telas.size()-1).setHeight(267);
   telas.get(telas.size()-1).setPosicaoInicial(1218, 607);
+  //======== Telas Textos ==========//
+  telasF.add( new BamboleFrases(this, "frases.csv", new PVector(545, 619), 20, 18, 185, 190 ) );
+  telasF.get(telasF.size()-1).setWidth(185);
+  telasF.get(telasF.size()-1).setHeight(200);
+  telasF.get(telasF.size()-1).setPosicaoInicial(545, 619);
+  telasF.add( new BamboleFrases(this, "frases.csv", new PVector(749, 639), 20, 18, 185, 190 ) );
+  telasF.get(telasF.size()-1).setWidth(185);
+  telasF.get(telasF.size()-1).setHeight(200);
+  telasF.get(telasF.size()-1).setPosicaoInicial(749, 639);
+  telasF.add( new BamboleFrases(this, "frases.csv", new PVector(width*.5, 250), 60, 25, 800, 240 ) );
+  telasF.get(telasF.size()-1).setWidth(800);
+  telasF.get(telasF.size()-1).setHeight(250);
+  telasF.get(telasF.size()-1).setPosicaoInicial(width*.5, 250);
 }
 void draw() {
   background(0);
   for (Bambole b : telas) {
     b.ativa();  
   }
-//  movimentoPontos.mostraZona();
-//  movimentoPontosB.mostraZona();
-  if (presentacao) {
-    if (mostraFrase) {
-      movimentoPontos.desenhaPontosPraFrase();
-      movimentoPontosB.desenhaPontosPraFrase();
-    }else {
-      movimentoPontos.atualizaDeriba();
-      movimentoPontos.desenhaPontosSoltos();
-      movimentoPontosB.atualizaDeriba();
-      movimentoPontosB.desenhaPontosSoltos();
-    }
-    mudaFrase();
+  for (BamboleFrases b : telasF) {
+    b.ativa();  
   }
-  
 }
-void novaFrase() {
-  cargaFrases.getFrases( (int) random (cargaFrases.cantLinhas-1) ); //carregamos novas frases
-  movimentoPontos.geraFrase(cargaFrases.linhasFrase()); //As frases pasam como Array de Strings
-  movimentoPontos.geraPontosSoltos();
-  cargaFrases.getFrases( (int) random (cargaFrases.cantLinhas-1) ); //carregamos novas frases
-  movimentoPontosB.geraFrase(cargaFrases.linhasFrase()); //As frases pasam como Array de Strings
-  movimentoPontosB.geraPontosSoltos();
-}
+
 
 void keyPressed(){
   
-  presentacao = !presentacao;
-  for (Bambole b : telas) {
-    b.presentacao( presentacao ) ; //!b.getPres() );  
-  }
+  
   
   if (key == 'c')  {
-    movimentoPontos.mudaCentro();
-    movimentoPontosB.mudaCentro();
+    presentacao = !presentacao;
+    for (Bambole b : telas) {
+      b.presentacao( presentacao ) ; //!b.getPres() );  
+    }
+    for (BamboleFrases b : telasF) {
+      b.presentacao( presentacao ) ; //!b.getPres() );  
+    }
   }
 }
 void movieEvent(Movie m) {
   m.read();
 }
 
-//Frases
-void muda() {
-  mostraFrase = !mostraFrase;
-  if (mostraFrase)
-    novaFrase();
-}
-
 void mouseReleased () {
-    muda();
-}
-void mudaFrase() {
-  if (mostraFrase) {
-    if (frameCount%550 == 0) 
-      muda();
-  } else {
-    if (frameCount%200 == 0) 
-      muda();
-  }
+  //  muda();
 }
