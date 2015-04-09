@@ -4,6 +4,7 @@ class Moldura {
   PGraphics filtro;
   Ponto p1, p2, p3, p4, pcentro;
   PVector rect1, rect2;
+  int x1,x2,y1,y2; //coordenadas x e y dos retangulos que contém o circulo central
   
   Moldura () {
     setWidth(50);
@@ -55,10 +56,10 @@ class Moldura {
     noFill();
     stroke(255);
     rectMode(CORNERS);
-    int x1 = int( min(p1.x(), p4.x()) );
-    int x2 = int( max(p2.x(), p3.x()) ); //<>//
-    int y1 = int( min(p1.y(), p2.y()) );
-    int y2 = int( max(p4.y(), p3.y()) );
+    x1 = int( min(p1.x(), p4.x()) );
+    x2 = int( max(p2.x(), p3.x()) ); //<>//
+    y1 = int( min(p1.y(), p2.y()) );
+    y2 = int( max(p4.y(), p3.y()) );
     rect( x1 , y1,  x2,  y2);
     fill(255);
     text( (x2-x1) , x1 + ((x2-x1)/2) , y1-20);
@@ -86,35 +87,31 @@ class Moldura {
   }
   
   void desenhaFiltro() {
-    filtro = createGraphics(vWidth, vHeight);
     PVector pontoBezier_1  = calculaVetor(new PVector(p4.x(), p4.y()), new PVector (p1.x(), p1.y()) );
     PVector pontoBezier_2  = calculaVetor(new PVector(p3.x(), p3.y()), new PVector (p2.x(), p2.y()) );
-    PVector pontoBezier_3  = calculaVetor(new PVector(p1.x(), p1.y()), new PVector (p4.x(), p4.y()) );
-    PVector pontoBezier_4  = calculaVetor(new PVector(p2.x(), p2.y()), new PVector (p3.x(), p3.y()) ); 
-    
-    filtro.fill(255);
+    strokeWeight(1);
+    fill(0);
+    noStroke();
     //filtro.beginDraw();
     beginShape();
-    vertex(p1.x(), p1.y() );
-    bezierVertex(p2.x(), p2.y(), p1.x(), p1.y(), p2.x(), p2.y());
-    bezierVertex(p3.x(), p3.y(), p2.x(), p2.y(), p3.x(), p3.y());
-    bezierVertex(p4.x(), p4.y(), p3.x(), p3.y(), p4.x(), p4.y());
+    vertex(x1-5, y2);
+    bezierVertex(x1-5, pontoBezier_1.y, x1-5, y2, x1-5, pontoBezier_1.y );
+    bezierVertex(pontoBezier_1.x, pontoBezier_1.y,  x1-5, pontoBezier_1.y, pontoBezier_1.x, pontoBezier_1.y);
+    bezierVertex( p4.x(), p4.y(),  p3.x(), p3.y(), pontoBezier_2.x, pontoBezier_2.y);
+    bezierVertex(x2+5, pontoBezier_2.y, pontoBezier_2.x, pontoBezier_2.y, x2+5, pontoBezier_2.y);
+    bezierVertex(x2+5, y2, x2+5, pontoBezier_2.y, x2+5, y2);
     endShape();
-  //  filtro.endDraw();
-    
-/*    beginShape();
-vertex(p3.x(), p3.y());
-bezierVertex(80, 0, 80, 75, 30, 75);
-bezierVertex(50, 80, 60, 25, 30, 20);
-endShape();
-*/
-/*    filtro.loadPixels();
-    for (int i = 0; i < filtro.pixels.length; i++) {
-      filtro.pixels[i] = color(0, 90, 102, i % filtro.width * 2); 
-    }
-    filtro.updatePixels();*/
-    image(filtro, pcentro.x(), pcentro.y() );
-  }
+    beginShape();
+    vertex(x1-5, y1);
+    bezierVertex(x1-5, pontoBezier_1.y, x1-5, y1, x1-5, pontoBezier_1.y );
+    bezierVertex(pontoBezier_1.x, pontoBezier_1.y,  x1-5, pontoBezier_1.y, pontoBezier_1.x, pontoBezier_1.y);
+    bezierVertex( p1.x(), p1.y(),  p2.x(), p2.y(), pontoBezier_2.x, pontoBezier_2.y);
+    bezierVertex(x2+5, pontoBezier_2.y, pontoBezier_2.x, pontoBezier_2.y, x2+5, pontoBezier_2.y);
+    bezierVertex(x2+5, y1, x2+5, pontoBezier_2.y, x2+5, y1);
+    endShape();
+ 
+ }
+ 
 /*===========
   SETTERS
   ==========*/

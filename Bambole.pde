@@ -15,7 +15,7 @@ class Bambole extends Moldura {
        clip.newPos(getPos()); 
        clip.ver();  
        
-   //    desenhaFiltro();
+       desenhaFiltro();
     }
     else
     {

@@ -6,7 +6,7 @@ import geomerative.*;
 
 ArrayList <Bambole> telas;
 CargaFrases cargaFrases;
-MovimentoPontos movimentoPontos;
+MovimentoPontos movimentoPontos,movimentoPontosB;
 boolean mostraFrase;
 boolean presentacao;
 
@@ -33,8 +33,9 @@ void setup() {
   RG.setPolygonizer(RG.ADAPTATIVE);
   cargaFrases = new CargaFrases (20);
   
-   PVector centroFrases = new PVector(238, 375);
-  movimentoPontos = new MovimentoPontos(centroFrases, 25, 80, 200 );
+   PVector centroFrases = new PVector(545, 619);
+  movimentoPontos = new MovimentoPontos(centroFrases, 20, 185, 200 );
+  movimentoPontosB = new MovimentoPontos(new PVector(749, 639), 20, 185, 200 );
   
   novaFrase();
   presentacao = mostraFrase = false;
@@ -46,39 +47,38 @@ void setup() {
 }
 void addTelas() {
   telas.add( new Bambole(this, "testm.mov", new PVector( width * .3, height * .3) ) ); 
-  telas.get(telas.size()-1).setWidth(150);
-  telas.get(telas.size()-1).setHeight(275);
-  telas.get(telas.size()-1).setPosicaoInicial(width/2,height/2 );
+  telas.get(telas.size()-1).setWidth(221);
+  telas.get(telas.size()-1).setHeight(263);
+  telas.get(telas.size()-1).setPosicaoInicial(141,560 );
   telas.add( new Bambole(this, "testm.mov", new PVector( width * .3, height * .3) ) ); 
-  telas.get(telas.size()-1).setWidth(150);
-  telas.get(telas.size()-1).setHeight(275);
-  telas.get(telas.size()-1).setPosicaoInicial(1104, 583);
+  telas.get(telas.size()-1).setWidth(205);
+  telas.get(telas.size()-1).setHeight(230);
+  telas.get(telas.size()-1).setPosicaoInicial(364, 596);
   telas.add( new Bambole(this, "testm.mov", new PVector( width * .3, height * .3) ) ); 
-  telas.get(telas.size()-1).setWidth(150);
-  telas.get(telas.size()-1).setHeight(275);
-  telas.get(telas.size()-1).setPosicaoInicial(104, 683);
+  telas.get(telas.size()-1).setWidth(233);
+  telas.get(telas.size()-1).setHeight(247);
+  telas.get(telas.size()-1).setPosicaoInicial(969, 591);
   telas.add( new Bambole(this, "testm.mov", new PVector( width * .3, height * .3) ) ); 
-  telas.get(telas.size()-1).setWidth(150);
-  telas.get(telas.size()-1).setHeight(275);
-  telas.get(telas.size()-1).setPosicaoInicial(600, 323);
-  telas.add( new Bambole(this, "testm.mov", new PVector( width * .3, height * .3) ) ); 
-  telas.get(telas.size()-1).setWidth(150);
-  telas.get(telas.size()-1).setHeight(275);
-  telas.get(telas.size()-1).setPosicaoInicial(750, 80);
-  
+  telas.get(telas.size()-1).setWidth(271);
+  telas.get(telas.size()-1).setHeight(267);
+  telas.get(telas.size()-1).setPosicaoInicial(1218, 607);
 }
 void draw() {
   background(0);
   for (Bambole b : telas) {
     b.ativa();  
   }
-  movimentoPontos.mostraZona();
+//  movimentoPontos.mostraZona();
+//  movimentoPontosB.mostraZona();
   if (presentacao) {
     if (mostraFrase) {
       movimentoPontos.desenhaPontosPraFrase();
+      movimentoPontosB.desenhaPontosPraFrase();
     }else {
       movimentoPontos.atualizaDeriba();
       movimentoPontos.desenhaPontosSoltos();
+      movimentoPontosB.atualizaDeriba();
+      movimentoPontosB.desenhaPontosSoltos();
     }
     mudaFrase();
   }
@@ -88,6 +88,9 @@ void novaFrase() {
   cargaFrases.getFrases( (int) random (cargaFrases.cantLinhas-1) ); //carregamos novas frases
   movimentoPontos.geraFrase(cargaFrases.linhasFrase()); //As frases pasam como Array de Strings
   movimentoPontos.geraPontosSoltos();
+  cargaFrases.getFrases( (int) random (cargaFrases.cantLinhas-1) ); //carregamos novas frases
+  movimentoPontosB.geraFrase(cargaFrases.linhasFrase()); //As frases pasam como Array de Strings
+  movimentoPontosB.geraPontosSoltos();
 }
 
 void keyPressed(){
@@ -97,7 +100,10 @@ void keyPressed(){
     b.presentacao( presentacao ) ; //!b.getPres() );  
   }
   
-  if (key == 'c')  movimentoPontos.mudaCentro();
+  if (key == 'c')  {
+    movimentoPontos.mudaCentro();
+    movimentoPontosB.mudaCentro();
+  }
 }
 void movieEvent(Movie m) {
   m.read();
